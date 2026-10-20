@@ -35,7 +35,10 @@ installRendererCrashDiagnostics('dashboard-popout')
 setReactCommitCascadeRendererSurface('dashboard-popout')
 
 function applyPopoutAppearance(settings: GlobalSettings | null): void {
-  applyDocumentTheme(settings?.theme ?? 'system', { disableTransitions: false })
+  applyDocumentTheme(settings?.theme ?? 'system', {
+    disableTransitions: false,
+    colorTheme: settings?.colorTheme
+  })
   document.documentElement.style.setProperty(
     '--app-font-family',
     buildAppFontFamily(settings?.appFontFamily)

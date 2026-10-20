@@ -7,6 +7,7 @@ import { useAppStore } from '../store'
 /** Applies the settings-driven theme and app font to the document root. */
 export function useDocumentAppearance(): void {
   const theme = useAppStore((s) => s.settings?.theme)
+  const colorTheme = useAppStore((s) => s.settings?.colorTheme)
   const appFontFamily = useAppStore((s) => s.settings?.appFontFamily)
 
   useEffect(() => {
@@ -15,23 +16,23 @@ export function useDocumentAppearance(): void {
     }
 
     if (theme === 'dark') {
-      applyDocumentTheme('dark')
+      applyDocumentTheme('dark', { colorTheme })
       return undefined
     } else if (theme === 'light') {
-      applyDocumentTheme('light')
+      applyDocumentTheme('light', { colorTheme })
       return undefined
     }
     // system
     const mq = window.matchMedia('(prefers-color-scheme: dark)')
-    applyDocumentTheme('system')
+    applyDocumentTheme('system', { colorTheme })
     const handler = (): void => {
-      applyDocumentTheme('system')
+      applyDocumentTheme('system', { colorTheme })
       // System theme changes don't mutate the store, so mobile terminal colors need an explicit graph republish.
       scheduleRuntimeGraphSync()
     }
     mq.addEventListener('change', handler)
     return () => mq.removeEventListener('change', handler)
-  }, [theme])
+  }, [theme, colorTheme])
 
   useEffect(() => {
     document.documentElement.style.setProperty(

@@ -5,4 +5,7 @@ import type { WorktreeDeletionPreferences } from './worktree-deletion-preference
 /** Settings groups owned by their feature modules and composed into GlobalSettings. */
 export type GlobalSettingsBase = NativeChatGlobalSettings &
   WorktreeDeletionPreferences &
-  ClaudeAccountSwitchSettings
+  ClaudeAccountSwitchSettings & {
+    /** Optional dark color theme variant that coexists with the default Orca dark palette. */
+    colorTheme?: 'default' | 'vscode-dark'
+  }

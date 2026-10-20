@@ -6,12 +6,18 @@ import {
 } from '@/i18n/supported-languages'
 import { translate } from '@/i18n/i18n'
 
-function resolveThemeSummary(theme: GlobalSettings['theme']): string {
+function resolveThemeSummary(
+  theme: GlobalSettings['theme'],
+  colorTheme?: GlobalSettings['colorTheme']
+): string {
   if (theme === 'system') {
     return translate('auto.components.settings.AppearancePane.fb0e0b4453', 'System')
   }
   if (theme === 'light') {
     return translate('auto.components.settings.AppearancePane.fd89b5487c', 'Light')
+  }
+  if (colorTheme === 'vscode-dark') {
+    return translate('settings.appearance.theme.vscodeDark', 'vscodeDark')
   }
   return translate('auto.components.settings.AppearancePane.7d26ccabe8', 'Dark')
 }
@@ -29,7 +35,7 @@ export function resolveInterfaceSectionSummary(settings: GlobalSettings): string
     settings.appFontFamily ||
     translate('auto.components.settings.AppearancePane.interfaceDefaultFont', 'Default font')
   if (!SHOW_UI_LANGUAGE_SETTING) {
-    return `${resolveThemeSummary(settings.theme)} · ${fontSummary}`
+    return `${resolveThemeSummary(settings.theme, settings.colorTheme)} · ${fontSummary}`
   }
-  return `${resolveThemeSummary(settings.theme)} · ${resolveLanguageSummary(settings.uiLanguage)} · ${fontSummary}`
+  return `${resolveThemeSummary(settings.theme, settings.colorTheme)} · ${resolveLanguageSummary(settings.uiLanguage)} · ${fontSummary}`
 }

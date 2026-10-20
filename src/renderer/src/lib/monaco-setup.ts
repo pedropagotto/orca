@@ -20,6 +20,7 @@ import { installMonacoDelayerCancellationGuard } from './monaco-delayer-cancella
 import { installMonacoDiffEditorDisposalGuard } from './monaco-diff-editor-disposal'
 import { installMonacoPeekReferencesPreviewOptions } from './monaco-peek-preview-options'
 import { installMonacoContextMenuPaste } from '@/components/editor/install-monaco-context-menu-paste'
+import { registerMonacoVscodeDarkTheme } from './monaco-vscode-dark-theme'
 import { runMonacoSetupSteps } from './monaco-setup-steps'
 
 globalThis.MonacoEnvironment = {
@@ -80,6 +81,7 @@ monacoTS.javascriptDefaults.setCompilerOptions({
 })
 
 runMonacoSetupSteps([
+  ['vscodeDark theme registration', () => registerMonacoVscodeDarkTheme(monaco)],
   ['Vue language registration', () => registerVueLanguage(monaco)],
   ['Svelte language registration', () => registerSvelteLanguage(monaco)],
   ['Astro language registration', () => registerAstroLanguage(monaco)],

@@ -465,6 +465,47 @@
   --diff-removed-gutter: color-mix(in srgb, var(--git-decoration-deleted) 32%, transparent);
 }
 
+/* ── vscodeDark Variant (coexists with default .dark) ── */
+
+.dark.vscode-dark {
+  --background: #121314;
+  --editor-surface: #121314;
+  --foreground: #bfbfbf;
+  --card: #191a1b;
+  --card-foreground: #bfbfbf;
+  --popover: #202122;
+  --popover-foreground: #bfbfbf;
+  --secondary: #242526;
+  --secondary-foreground: #bfbfbf;
+  --muted: #242526;
+  --muted-foreground: #8c8c8c;
+  --accent: #2c2d2e;
+  --accent-foreground: #ededed;
+  --border: #2a2b2c;
+  --input: #333536;
+  --worktree-sidebar: #191a1b;
+  --worktree-sidebar-foreground: #bfbfbf;
+  --worktree-sidebar-accent: #2c2d2e;
+  --worktree-sidebar-accent-foreground: #ededed;
+  --worktree-sidebar-border: #2a2b2c;
+  --sidebar: #191a1b;
+  --sidebar-foreground: #bfbfbf;
+  --sidebar-accent: #2c2d2e;
+  --sidebar-accent-foreground: #ededed;
+  --sidebar-border: #2a2b2c;
+  --git-decoration-added: #73c991;
+  --git-decoration-modified: #e5ba7d;
+  --git-decoration-deleted: #f48771;
+  --git-decoration-renamed: #73c991;
+  --git-decoration-untracked: #73c991;
+  --git-decoration-copied: #73c991;
+  --git-decoration-ignored: #8c8c8c;
+  --diff-added-ground: color-mix(in srgb, var(--git-decoration-added) 16%, transparent);
+  --diff-added-gutter: color-mix(in srgb, var(--git-decoration-added) 30%, transparent);
+  --diff-removed-ground: color-mix(in srgb, var(--git-decoration-deleted) 18%, transparent);
+  --diff-removed-gutter: color-mix(in srgb, var(--git-decoration-deleted) 32%, transparent);
+}
+
 .plugin-security-chrome {
   /* Why: plugin themes may style the app, but provenance and consent must
      retain host-owned contrast so a pack cannot disguise a trust decision. */

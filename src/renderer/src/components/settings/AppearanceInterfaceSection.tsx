@@ -33,6 +33,7 @@ import { translate } from '@/i18n/i18n'
 import type { UiLanguage } from '../../../../shared/ui-language'
 import { matchesSettingsSearch, normalizeSettingsSearchQuery } from './settings-search'
 import { usePluginLanguagePacks } from '@/store/plugin-language-packs'
+import { applyDocumentTheme } from '@/lib/document-theme'
 
 type AppearanceInterfaceSectionProps = {
   settings: GlobalSettings
@@ -89,10 +90,21 @@ export function AppearanceInterfaceSection({
           control={
             <SettingsSegmentedControl
               ariaLabel={themeLabel}
-              value={settings.theme}
+              value={
+                settings.theme === 'dark' && settings.colorTheme === 'vscode-dark'
+                  ? 'vscode-dark'
+                  : settings.theme
+              }
               onChange={(option) => {
-                updateSettings({ theme: option })
+                if (option === 'vscode-dark') {
+                  updateSettings({ theme: 'dark', colorTheme: 'vscode-dark' })
+                  applyTheme('dark')
+                  applyDocumentTheme('dark', { colorTheme: 'vscode-dark' })
+                  return
+                }
+                updateSettings({ theme: option, colorTheme: 'default' })
                 applyTheme(option)
+                applyDocumentTheme(option, { colorTheme: 'default' })
               }}
               options={[
                 {
@@ -102,6 +114,10 @@ export function AppearanceInterfaceSection({
                 {
                   value: 'dark',
                   label: translate('auto.components.settings.AppearancePane.7d26ccabe8', 'Dark')
+                },
+                {
+                  value: 'vscode-dark',
+                  label: translate('settings.appearance.theme.vscodeDark', 'vscodeDark')
                 },
                 {
                   value: 'light',

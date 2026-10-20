@@ -53,7 +53,10 @@ function SpaceWindowRoot(): React.JSX.Element {
   }, [])
 
   useEffect(() => {
-    applyDocumentTheme(settings?.theme ?? 'system', { disableTransitions: false })
+    applyDocumentTheme(settings?.theme ?? 'system', {
+      disableTransitions: false,
+      colorTheme: settings?.colorTheme
+    })
     document.documentElement.style.setProperty(
       '--app-font-family',
       buildAppFontFamily(settings?.appFontFamily)
@@ -62,10 +65,11 @@ function SpaceWindowRoot(): React.JSX.Element {
       return
     }
     const media = window.matchMedia('(prefers-color-scheme: dark)')
-    const handleChange = (): void => applyDocumentTheme('system')
+    const handleChange = (): void =>
+      applyDocumentTheme('system', { colorTheme: settings?.colorTheme })
     media.addEventListener('change', handleChange)
     return () => media.removeEventListener('change', handleChange)
-  }, [settings?.theme, settings?.appFontFamily])
+  }, [settings?.theme, settings?.colorTheme, settings?.appFontFamily])
 
   return (
     <RecoverableRenderErrorBoundary

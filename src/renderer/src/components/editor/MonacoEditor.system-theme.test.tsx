@@ -6,8 +6,12 @@ import { resetSystemPrefersDarkSubscriptionForTests } from '@/components/termina
 const editorProps: { current: Record<string, unknown> | null } = vi.hoisted(() => ({
   current: null
 }))
-const settingsState: { theme: 'system' | 'dark' | 'light' } = vi.hoisted(() => ({
-  theme: 'system'
+const settingsState: {
+  theme: 'system' | 'dark' | 'light'
+  colorTheme?: 'default' | 'vscode-dark'
+} = vi.hoisted(() => ({
+  theme: 'system',
+  colorTheme: undefined
 }))
 
 vi.mock('@monaco-editor/react', () => ({
@@ -24,6 +28,9 @@ vi.mock('@/store', () => ({
       settings: {
         get theme() {
           return settingsState.theme
+        },
+        get colorTheme() {
+          return settingsState.colorTheme
         },
         terminalFontSize: 13,
         terminalFontFamily: 'monospace'
@@ -109,6 +116,7 @@ afterEach(() => {
   cleanup()
   editorProps.current = null
   settingsState.theme = 'system'
+  settingsState.colorTheme = undefined
   resetSystemPrefersDarkSubscriptionForTests()
   window.matchMedia = originalMatchMedia
 })
@@ -142,5 +150,17 @@ describe('MonacoEditor system theme', () => {
       media.emit(false)
     })
     expect(editorProps.current?.theme).toBe('vs')
+  })
+
+  it('uses vscode-dark when colorTheme is vscode-dark while keeping vs-dark for default dark', () => {
+    settingsState.theme = 'dark'
+    installMatchMedia(false)
+    renderEditor()
+    expect(editorProps.current?.theme).toBe('vs-dark')
+
+    cleanup()
+    settingsState.colorTheme = 'vscode-dark'
+    renderEditor()
+    expect(editorProps.current?.theme).toBe('vscode-dark')
   })
 })

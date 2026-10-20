@@ -26,6 +26,7 @@ type ApplyDocumentThemeOptions = {
   requestAnimationFrame?: ThemeAnimationFrame
   cancelAnimationFrame?: ThemeCancelAnimationFrame
   disableTransitions?: boolean
+  colorTheme?: GlobalSettings['colorTheme']
 }
 
 let pendingTransitionDisableFrames: number[] = []
@@ -69,6 +70,7 @@ export function applyDocumentTheme(
   }
 
   root.classList.toggle('dark', shouldUseDarkTheme)
+  root.classList.toggle('vscode-dark', shouldUseDarkTheme && options.colorTheme === 'vscode-dark')
   // Mirror with `light` so consumers can observe the resolved theme
   // symmetrically (Tailwind keys only on `dark`, so this is style-neutral).
   root.classList.toggle('light', !shouldUseDarkTheme)

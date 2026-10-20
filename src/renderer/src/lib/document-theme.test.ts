@@ -91,9 +91,15 @@ describe('document theme', () => {
 
     applyDocumentTheme('dark', { root, disableTransitions: false })
     expect(root.classList.contains('dark')).toBe(true)
+    expect(root.classList.contains('vscode-dark')).toBe(false)
+
+    applyDocumentTheme('dark', { root, disableTransitions: false, colorTheme: 'vscode-dark' })
+    expect(root.classList.contains('dark')).toBe(true)
+    expect(root.classList.contains('vscode-dark')).toBe(true)
 
     applyDocumentTheme('light', { root, disableTransitions: false })
     expect(root.classList.contains('dark')).toBe(false)
+    expect(root.classList.contains('vscode-dark')).toBe(false)
   })
 
   it('applies system root class from matchMedia', () => {
